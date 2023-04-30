@@ -21,7 +21,50 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="backend_interface.py" />
+    <Compile Include="backend_steam_network.py" />
+    <Compile Include="http_client.py" />
     <Compile Include="Program.py" />
+    <Compile Include="steam_network\authentication.py" />
+    <Compile Include="steam_network\protocol\consts.py" />
+    <Compile Include="steam_network\protocol\messages\encrypted_app_ticket_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\enums_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\service_cloudconfigstore_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_auth_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_base_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_chat_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_clientserver_2_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_clientserver_appinfo_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_clientserver_friends_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_clientserver_login_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_clientserver_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_clientserver_userstats_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_client_objects_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_player_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_unified_base_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\steammessages_webui_friends_pb2.py" />
+    <Compile Include="steam_network\protocol\messages\__init__.py" />
+    <Compile Include="steam_network\protocol\protobuf_client.py" />
+    <Compile Include="steam_network\protocol\types.py" />
+    <Compile Include="steam_network\protocol\__init__.py" />
+    <Compile Include="steam_network\protocol_client.py" />
+    <Compile Include="steam_network\steam_http_client.py" />
+    <Compile Include="steam_network\websocket_cache_persistence.py" />
+    <Compile Include="steam_network\websocket_client.py" />
+    <Compile Include="steam_network\websocket_list.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="steam_network\" />
+    <Folder Include="steam_network\custom_login\" />
+    <Folder Include="steam_network\custom_login\css\" />
+    <Folder Include="steam_network\protocol\" />
+    <Folder Include="steam_network\protocol\messages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.md" />
+    <Content Include="requirements.txt" />
+    <Content Include="steam_network\custom_login\css\style.css" />
+    <Content Include="steam_network\custom_login\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
