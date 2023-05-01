@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /lib/python3.10/site-packages
 /lib64
+/env

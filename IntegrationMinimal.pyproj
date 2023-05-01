@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>IntegrationMinimal</Name>
     <RootNamespace>IntegrationMinimal</RootNamespace>
+    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,6 +53,7 @@
     <Compile Include="steam_network\websocket_cache_persistence.py" />
     <Compile Include="steam_network\websocket_client.py" />
     <Compile Include="steam_network\websocket_list.py" />
+    <Compile Include="user_profile.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="steam_network\" />
@@ -61,10 +63,22 @@
     <Folder Include="steam_network\protocol\messages\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="steam_network\custom_login\css\style.css" />
     <Content Include="steam_network\custom_login\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="env\">
+      <Id>env</Id>
+      <Version>3.11</Version>
+      <Description>env (Python 3.11 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
