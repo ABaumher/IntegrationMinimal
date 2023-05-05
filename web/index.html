@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="../../commonWeb/css/common.css">
+	<link rel="stylesheet" href="css/style.css">
+	<title>Connect with Steam</title>
+</head>
+
+<body>
+	<div class="container">
+		<header class="main-header">
+			<div class="main-header__container">
+				<img class="steam-logo-icon" src="../../commonWeb/img/icon-steam-logo.svg" alt="Steam logo">
+				<div class="main-header__title">
+					<h1 class="title">Connect with Steam</h1>
+					<p class="subtitle">To an existing Steam account</p>
+				</div>
+			</div>
+			<div class="main-header__container padlock-icon-container">
+				<svg class="padlock-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
+					<g fill-rule="evenodd">
+						<path d="M7.5 0c2 0 3.5 1.6 3.5 3.5V5h1a2 2 0 012 2v6a2 2 0 01-2 2H3a2 2 0 01-2-2V7c0-1.1.9-2 2-2h1V3.5C4 1.5 5.6 0 7.5 0zm0 8c-.2 0-.4.2-.5.4v3.1a.5.5 0 001 0v-3c0-.3-.2-.5-.5-.5zm0-7C6.2 1 5.1 2 5 3.3V5h5V3.5C10 2.2 9 1.1 7.7 1h-.2z"/>
+					</g>
+				</svg>
+				<span class="tooltip padlock-tooltip">GOG Galaxy does not hold your data. Your login and password will be sent as encrypted data to Steam servers.</span>
+			</div>
+		</header>
+		<main class="main-content">
+			<form id="main-form" class="main-form" action="/" method="GET">
+				<fieldset id="getUserName" style="display:none;">
+					<div class="field-group">
+						<label for="step-0-username">Enter your username</label>
+						<input class="basic-input login-input" type="text" id="step-0-username" name="username" disabled="disabled">
+					</div>
+					<p class="error-message error-message--start no-error">
+						<img src="../../commonWeb/img/icon-error.svg" alt="" class="error-icon error-icon--aligned-top"> The username does not exist or cannot be found. Try ensuring the user name is valid.
+					</p>
+				</fieldset>
+				<fieldset id="getPassword">
+					<legend id="say-hello">Please Enter your password to finish logging in.</legend> <!--TODO: Change this to say: "Welcome <user name>. Please Enter your password to finish logging in"-->
+					<div class="field-group">
+						<label for="step-1-password">Password</label>
+						<input class="basic-input login-input" type="password" id="step-1-password" name="password" disabled="disabled">
+					</div>
+					<p class="resend-code">
+						Not you?
+						<a href="/login_finished?switch_user=True" class="resend-button">Log in with a different User.</a>
+					</p>
+					<p class="error-message error-message--start no-error">
+						<img src="../../commonWeb/img/icon-error.svg" alt="" class="error-icon error-icon--aligned-top"> You have entered your password incorrectly. Please check your password and try again.
+					</p>
+				</fieldset>
+				<fieldset id="steamGuardEmail">
+					<legend>Enter a special access code (Steam Guard) that was sent to your email address from Steam Support.</legend>
+					<div class="field-group field-group--no-justify">
+						<label for="step-1-code">Steam Guard code</label>
+						<input class="basic-input steam-guard-input" type="text" id="step-1-code" name="code" disabled="disabled">
+					</div>
+					<p class="resend-code">
+						Haven’t received the email from Steam Support?
+						<a href="/two_factor_mail_finished?resend=True" class="resend-button">Resend it.</a>
+					</p>
+					<p class="error-message error-message--centered no-error">
+						<img src="../../commonWeb/img/icon-error.svg" alt="" class="error-icon"> Invalid code
+					</p>
+				</fieldset>
+				<fieldset id="steamGuardPhone">
+					<legend>
+						As an additional security measure, you’ll need to enter the current Steam Guard code from the Steam
+						Mobile Authenticator on your phone.
+					</legend>
+					<div class="field-group field-group--no-justify">
+						<label for="step-4-code">Steam Guard code</label>
+						<input class="basic-input steam-guard-input errored" type="text" id="step-4-code" name="code" disabled="disabled">
+					</div>
+					<p class="error-message error-message--centered no-error">
+						<img src="../../commonWeb/img/icon-error.svg" alt="" class="error-icon"> Invalid code
+					</p>
+				</fieldset>
+			</form>
+			<p>This code is in development. There are significant changes under the hood. Please bear with us while we fix any errors!</p>
+		</main>
+		<footer class="main-footer">
+			<div class="main-footer__container">
+				<a class="forgot-password" href="https://help.steampowered.com/en/wizard/HelpWithLogin" target="_blank">Forgot your password?</a>
+			</div>
+			<div class="main-footer__container" id="actionButtons">
+				<button class="basic-button main-footer__button main-footer__button--primary" type="submit" form="main-form">Continue</button>
+			</div>
+		</footer>
+	</div>
+	<script>
+		// Determining user's system
+
+		function getOs() 
+		{
+			let osClassName = "";
+
+			if (navigator.userAgent.toLowerCase().includes("win")) osClassName = "windows";
+			if (navigator.userAgent.toLowerCase().includes("osx")) osClassName = "macOs";
+			
+			document.querySelector("body").classList.add(osClassName);
+		}
+
+		// Toggling password visibility
+
+		const toggleButton = document.querySelector(".show-password");
+		const actionButtonsSelector = document.querySelector("#actionButtons");
+		const input = document.getElementById("step-2-password-errored");
+
+		function togglePasswordVisibility() {
+			if (input.type === "password") {
+				input.type = "text";
+			} else {
+				input.type = "password"
+			}
+		}
+		toggleButton.addEventListener("click", togglePasswordVisibility);
+
+		// Handling urlParams, form actions and enabling inputs
+
+		const viewLookup = {
+			user: "user",
+			login: "login",
+			steamGuard: "steamguard",
+			steamAuthenticator: "steamauthenticator",
+		};
+
+		//Error members are hidden by default, using the no-error class. Thus we can get all errors using the no-error class. It may be smart to give errors a common class so the queries would work even if the errors are shown
+		//but frankly that's overkill for what we need
+		const fieldSetsObj = {
+			userFieldSet: document.querySelector("#getUserName"),
+			userInputs: document.querySelectorAll("#getUserName input"),
+			userError: document.querySelectorAll("#getUserName .no-error"),
+
+			loginFieldSet: document.querySelector("#getPassword"),
+			loginInputs: document.querySelectorAll("#getPassword input"),
+			loginError: document.querySelectorAll("#getPassword .no-error"),
+
+			steamGuardFieldSet: document.querySelector("#steamGuardEmail"),
+			steamGuardInputs: document.querySelectorAll("#steamGuardEmail input"),
+			steamGuardError: document.querySelectorAll("#steamGuardEmail .no-error"),
+
+			steamAuthenticatorFieldset: document.querySelector("#steamGuardPhone"),
+			steamAuthenticatorInputs: document.querySelectorAll("#steamGuardPhone input"),
+			steamAuthenticatorError: document.querySelectorAll("#steamGuardPhone .no-error"),
+		}
+
+		function handleEnablingInputs(inputs) {
+			for (input of inputs) 
+			{
+				input.disabled = false;
+			}
+		}
+
+		function handleParamsAndForms()
+		{
+			const urlParams = new URLSearchParams(window.location.search)
+			const formElement = document.querySelector("#main-form");
+			const forgotPasswordButtonElement = document.querySelector(".forgot-password");
+
+			//display the proper form content
+			let view = urlParams.get("view");
+			let errored = urlParams.get["errored"] == 'true';
+			let act, loc, inp, err = null;
+
+			switch (view)
+			{
+				case viewLookup.login:
+					loc = fieldSetsObj.loginFieldSet;
+					inp = fieldSetsObj.loginInputs;
+					act = "/login_finished";
+					err = errored ? fieldSetsObj.loginError : null;
+					forgotPasswordButtonElement.style.display = "block";
+					break;
+				case viewLookup.steamGuard:
+					loc = fieldSetsObj.steamGuardFieldSet;
+					inp = fieldSetsObj.steamGuardInputs;
+					act = "/two_factor_mail_finished";
+					err = errored ? fieldSetsObj.steamGuardError : null;
+					break;
+				case viewLookup.steamAuthenticator:
+					loc = fieldSetsObj.steamAuthenticatorFieldset;
+					inp = fieldSetsObj.steamAuthenticatorInputs;
+					act = "/two_factor_mobile_finished";
+					err = errored ? fieldSetsObj.steamAuthenticatorError : null;
+					break;
+				case viewLookup.user:
+				default:
+					loc = fieldSetsObj.userFieldSet;
+					inp = fieldSetsObj.userInputs;
+					act = "/user_finished";
+					err = errored ? fieldSetsObj.userError : null;
+					break;
+			}
+
+			if (view == viewLookup.login && errored)
+			{
+				document.querySelector(".main-footer").classList.add("not-sticky");
+			}
+
+			formElement.action = act;
+			handleEnablingInputs(inp);
+			//if we have set err, un-hide all the error members. 
+			if (err)
+			{
+				for (errorField of err)
+				{
+					errorField.classList.remove("no-error");
+				}
+			}
+			loc.style.display = "block";
+
+			//parse the user name if it's there and we're on the login page
+			let user = urlParams["user"];
+			if (view== viewLookup.login && user)
+			{
+				let helloMsg = document.getElementById("say-hello")
+				helloMsg.textContent = "Hello " + user + "! Please enter your password to finish logging in!";
+			}
+		}
+
+		window.addEventListener("load", handleParamsAndForms);
+		window.addEventListener("load", getOs);
+	</script>
+</body>
+
+</html>

@@ -4,7 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b3327319-c7b0-4888-abc5-b3656666e2bd</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Program.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,9 +25,13 @@
   <ItemGroup>
     <Compile Include="backend_interface.py" />
     <Compile Include="backend_steam_network.py" />
-    <Compile Include="http_client.py" />
-    <Compile Include="Program.py" />
-    <Compile Include="steam_network\authentication.py" />
+    <Compile Include="caches\__init__.py" />
+    <Compile Include="steam_network\socket_http_helper.py" />
+    <Compile Include="steam_network\steam_http_client.py" />
+    <Compile Include="steam_network\authentication_controller.py" />
+    <Compile Include="steam_network\authentication_model.py" />
+    <Compile Include="steam_network\authentication_view.py" />
+    <Compile Include="steam_network\network_websocket.py" />
     <Compile Include="steam_network\protocol\consts.py" />
     <Compile Include="steam_network\protocol\messages\encrypted_app_ticket_pb2.py" />
     <Compile Include="steam_network\protocol\messages\enums_pb2.py" />
@@ -46,28 +51,36 @@
     <Compile Include="steam_network\protocol\messages\steammessages_webui_friends_pb2.py" />
     <Compile Include="steam_network\protocol\messages\__init__.py" />
     <Compile Include="steam_network\protocol\protobuf_client.py" />
-    <Compile Include="steam_network\protocol\types.py" />
+    <Compile Include="steam_network\protocol\custom_types.py" />
     <Compile Include="steam_network\protocol\__init__.py" />
-    <Compile Include="steam_network\protocol_client.py" />
-    <Compile Include="steam_network\steam_http_client.py" />
-    <Compile Include="steam_network\websocket_cache_persistence.py" />
-    <Compile Include="steam_network\websocket_client.py" />
-    <Compile Include="steam_network\websocket_list.py" />
-    <Compile Include="user_profile.py" />
+    <Compile Include="steam_network\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="web\" />
+    <Folder Include="web\css\" />
+    <Folder Include="web\fonts\" />
+    <Folder Include="web\fonts\LatoWeb\" />
+    <Folder Include="web\img\" />
+    <Folder Include="caches\" />
     <Folder Include="steam_network\" />
-    <Folder Include="steam_network\custom_login\" />
-    <Folder Include="steam_network\custom_login\css\" />
     <Folder Include="steam_network\protocol\" />
     <Folder Include="steam_network\protocol\messages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="readme_for_developers.md" />
+    <Content Include="web\css\common.css" />
+    <Content Include="web\fonts\LatoWeb\LatoWeb-Light.ttf" />
+    <Content Include="web\fonts\LatoWeb\LatoWeb-Regular.ttf" />
+    <Content Include="web\fonts\LatoWeb\LatoWeb-Semibold.ttf" />
+    <Content Include="web\img\icon-error.svg" />
+    <Content Include="web\img\icon-show.svg" />
+    <Content Include="web\img\icon-steam-logo.svg" />
+    <Content Include="web\img\icon-warning.svg" />
+    <Content Include="program.py" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
-    <Content Include="steam_network\custom_login\css\style.css" />
-    <Content Include="steam_network\custom_login\index.html" />
+    <Content Include="web\index.html" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">
